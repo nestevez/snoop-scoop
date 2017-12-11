@@ -1,7 +1,6 @@
-chrome.tabs.onDOMContentLoading.addListener(function(tab){
-    chrome.tabs.sendRequest(tabs[0].id, {}, function(clicked){
-        if(clicked) {
-            chrome.tabs.update(window.tabs.openerTabId, {active: true});
-        }
+chrome.browserAction.onClicked.addListener(function(tab){
+    chrome.tabs.query({active:true, currentWindow:true}, function(tabs){
+        var activeTab = tabs[0];
+        chrome.tabs.sendMessage(activeTab.id, {"message":"clicked_browser_action"});
     });
-})
+});
