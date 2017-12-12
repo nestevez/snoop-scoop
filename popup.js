@@ -22,7 +22,7 @@ function searchPP() {
                 setTimeout(function(){
                     console.log(newTabId.id);
                     port = chrome.tabs.connect(newTabId.id,{name:'searchPP'});
-                    port.postMessage({'message':'grab_pp_text'});
+                    port.postMessage({'message':'grab_pp_text','url':req.url});
                     console.log("Message sent: {'message':'grab_pp_text'}");
                     port.onMessage.addListener(function(req){
                         console.log("Message received: "+req.message);
@@ -32,7 +32,7 @@ function searchPP() {
                         }
                     });
                     chrome.tabs.remove(newTabId.id);
-                },2500);
+                },5000);
             }
         });
     });        

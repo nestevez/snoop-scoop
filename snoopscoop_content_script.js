@@ -28,9 +28,11 @@ chrome.runtime.onConnect.addListener(function(port) {
             }
         }
         if(req.message == "grab_pp_text"){
-            var bodyContent = '';
-            for(let text of document.getElementsByTagName("body")){
-                bodyContent+=text.innerHTML;
+            var bodyContent = '<a href="'+req.url+'">'+req.url+'</a>';
+            if(!(req.url.indexOf('.pdf') != -1)){
+                for(let text of document.getElementsByTagName("body")){
+                    bodyContent+=text.innerHTML;
+                }
             }
             var message = {"message":"pp_content", "contents":bodyContent};
             port.postMessage(message);

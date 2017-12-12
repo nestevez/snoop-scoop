@@ -3,8 +3,8 @@
     "version": "0.1",
     "description": "Finds the privacy policy in the website you're on and pops up a window showing the policy.",
     "background": { 
-        "scripts": ["background.js"]
-        // "persistent": false 
+        "scripts": ["background.js"],
+        "persistent": false 
     },
     "content_scripts": [
         {
