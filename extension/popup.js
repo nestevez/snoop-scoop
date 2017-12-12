@@ -3,12 +3,15 @@
 // found in the LICENSE file.
     
 function searchPP() {
+    //Queries and sets active tab
     chrome.tabs.query({active:true, currentWindow:true}, function(tabs){
         var activeTab = tabs[0];
+        //Create connection with content script to request a PP search
         var port = chrome.tabs.connect(activeTab.id,{name:'searchPP'});
         port.postMessage({"message":"clicked_browser_action","activeTabId":activeTab.id});
         port.onMessage.addListener(function(req){
             console.log("Message received: "+req.message);
+            //If a display link message is returned, pop-up shows the PP link, opens the PP link in a new tab
             if(req.message == "display_link"){
                 var frame = document.getElementById("privacypolicy");
                 frame.innerHTML = "<a href='"+req.url+"'>"+req.url+"</a>";
@@ -19,6 +22,7 @@ function searchPP() {
                     newTabId.id = tab.id;
                     console.log(newTabId.id);
                 });
+                //When the new tab is open, requests a parsing of the PP link and displays text in pop-up
                 setTimeout(function(){
                     console.log(newTabId.id);
                     port = chrome.tabs.connect(newTabId.id,{name:'searchPP'});
@@ -31,6 +35,7 @@ function searchPP() {
                             frame.innerHTML = req.contents;
                         }
                     });
+                    //After grabbing + redisplaying text, the PP link tab is closed
                     chrome.tabs.remove(newTabId.id);
                 },5000);
             }
@@ -39,27 +44,3 @@ function searchPP() {
 }
 
 window.onload = searchPP;
-// var newTab = new Promise(
-//     function(resolve, reject){
-//         if(!)
-//         {
-//             resolve(newTabId);
-//         }
-//         else {
-//             reject("Error");
-//         }
-// });
-// var runNewTab = function(){
-//     newTab.then(function(tab){
-//         console.log("Then statement!"+tab);
-//     }).catch(function(error){
-//         console.log("Catch!");
-//     })};
-// runNewTab();
-// ;
-// chrome.runtime.onMessage.addListener(function(req,sender,sendResponse){
-// });
-// var policy = chrome.extension.getBackgroundPage();
-// document.addEventListener('click', function () {
-//     window.close();
-// });
