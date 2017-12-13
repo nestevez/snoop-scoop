@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ApiCaller;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,11 +16,13 @@ namespace snoop_scoop.Controllers
     [Route("api/[controller]")]
     public class AnalyzeController : Controller
     {
-        // GET: api/values
+        // GET: api/analyze
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            Console.WriteLine("stuff");
+            ApiCaller.ApiCaller.MakeRequest("6d350782accd4e04af39ff2852895750", "this is some test text");
+            return new string[] { "value1", "value2", "got here"};
         }
 
         // GET api/values/5

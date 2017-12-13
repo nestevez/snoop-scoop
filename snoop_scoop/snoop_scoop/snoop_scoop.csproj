@@ -12,6 +12,7 @@
     <PackageReference Include="Accord.Controls" Version="3.8.0" />
     <PackageReference Include="Accord.MachineLearning" Version="3.8.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
