@@ -9,10 +9,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+
 namespace snoop_scoop
 {
     public class Startup
     {
+        static public IConfigurationRoot Configuration { get; set; }
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -22,11 +25,10 @@ namespace snoop_scoop
             Configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession();
             services.AddMvc();
         }
 
@@ -37,7 +39,7 @@ namespace snoop_scoop
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseSession();
             app.UseMvc();
         }
     }

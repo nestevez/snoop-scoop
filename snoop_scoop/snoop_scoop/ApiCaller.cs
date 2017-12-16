@@ -8,14 +8,15 @@ using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.IO;
 
 
 namespace ApiCaller
 {
-    public class ApiCaller
+    public class TextAnalysis
     {
-        public static async void MakeRequest(string ConnectionString, string PolicyText)
+        public static async Task<IList<TextToken>> MakeRequest(string ConnectionString, string PolicyText)
         {
             var client = new HttpClient();
             var queryString = HttpUtility.ParseQueryString(string.Empty);
@@ -26,7 +27,7 @@ namespace ApiCaller
             HttpResponseMessage response;
 
             string MessageBody =
-                "{'language': 'en', 'analyzerIds': ['08ea174b-bfdb-4e64-987e-602f85da7f72'],'text':'this is a test string'}";
+                "{'language': 'en', 'analyzerIds': ['08ea174b-bfdb-4e64-987e-602f85da7f72'],'text':'This is a test string. Other things go here.'}";
 
             var PolicyJson = JsonConvert.SerializeObject(MessageBody);
 
@@ -37,10 +38,22 @@ namespace ApiCaller
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 response = await client.PostAsync(uri, content);
                 string StringResponse = await response.Content.ReadAsStringAsync();
-                List<Dictionary<string, object>> JsonResponse = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(StringResponse);
-                var parsedResponse = new Dictionary<string, object>();
-                // TODO: add a return value, change type signature away from void.
+                JToken RawResponse = JArray.Parse(StringResponse)[0]["result"][0]["Tokens"];
+                IList<TextToken> Results = new List<TextToken>();
+                foreach (JToken token in RawResponse)
+                {
+                    TextToken nextToken = token.ToObject<TextToken>();
+                    Results.Add(nextToken);
+                }
+                return Results;
             }
         }
+    }
+    public class TextToken
+    {
+        public int Len { get; set; }
+        public string NormalizedToken { get; set; }
+        public int Offset { get; set; }
+        public string RawToken { get; set; }
     }
 }

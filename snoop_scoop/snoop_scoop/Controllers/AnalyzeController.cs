@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ApiCaller;
+using snoop_scoop;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,8 +22,9 @@ namespace snoop_scoop.Controllers
         public IEnumerable<string> Get()
         {
             Console.WriteLine("stuff");
-            ApiCaller.ApiCaller.MakeRequest("6d350782accd4e04af39ff2852895750", "this is some test text");
-            return new string[] { "value1", "value2", "got here"};
+            string ConnectionString = Startup.Configuration["ConnectionString"];
+            List<TextToken> ParsedTokens = (List<TextToken>)TextAnalysis.MakeRequest(ConnectionString, "this is some test text").Result;
+            return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
@@ -37,7 +39,7 @@ namespace snoop_scoop.Controllers
         public void Post([FromBody]string value)
         {
             Console.WriteLine(value);
-
+            await TextAnalysis.MakeRequest("one", "two");
         }
 
         // PUT api/values/5
