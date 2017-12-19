@@ -7,6 +7,7 @@ from flask import Flask, jsonify, request, url_for
 import requests
 import json
 import os
+import re
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_pyfile('config.py')
@@ -21,17 +22,23 @@ def hello():
     return "Hello World!"
 
 @app.route('/api/analyze', methods=['POST'])
-def recieve_policy():
+def analysis_controller():
+    """Flow control for text analysis."""
+    send_analyzed_text(analyze_text(recieve_policy(request)))
+
+
+def recieve_policy(request):
     """Load json data from the extension's request."""
     data = request.get_json()
     text = data["text"]
     return text
 
-@app.route('/api/analyze', methods=['GET'])
-def check():
-    response = analyze_text("Testing sentence. Second sentence.")
-    print("response: ", response)
-    return response
+#@app.route('/api/analyze', methods=['GET'])
+#def check():
+#    """Test that we hit the api."""
+#    response = analyze_text("Testing sentence. Second sentence.")
+#    print("response: ", response)
+#    return response
 
 def analyze_text(data):
     """
@@ -57,7 +64,9 @@ def analyze_text(data):
 
 def send_analyzed_text(text):
     """Converts analyzed text into json and sends it to the machine learning models."""
-    return jsonify(text)
+    # TODO: import and connect machine learning module. Call relevent method here with text.
+    # text is a list of words, reduced to normalized tokens.
+    #return jsonify(text)
     
 
 if __name__ == '__main__':
