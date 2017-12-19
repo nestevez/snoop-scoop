@@ -261,5 +261,6 @@ __pycache__/
 *.pyc
 
 appsettings.*
+<<<<<<< HEAD
 instance/
-env/
+=======
