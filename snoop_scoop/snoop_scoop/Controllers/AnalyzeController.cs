@@ -39,7 +39,6 @@ namespace snoop_scoop.Controllers
         public void Post([FromBody]string value)
         {
             Console.WriteLine(value);
-            await TextAnalysis.MakeRequest("one", "two");
         }
 
         // PUT api/values/5

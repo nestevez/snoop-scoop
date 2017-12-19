@@ -27,7 +27,7 @@ namespace ApiCaller
             HttpResponseMessage response;
 
             string MessageBody =
-                "{'language': 'en', 'analyzerIds': ['08ea174b-bfdb-4e64-987e-602f85da7f72'],'text':'This is a test string. Other things go here.'}";
+                "{'language': 'en', 'analyzerIds': ['08ea174b-bfdb-4e64-987e-602f85da7f72'],'text':'This is a test string. Other things go here. Or maybe here?'}";
 
             var PolicyJson = JsonConvert.SerializeObject(MessageBody);
 
