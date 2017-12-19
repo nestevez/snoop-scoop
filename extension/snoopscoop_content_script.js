@@ -30,12 +30,21 @@ chrome.runtime.onConnect.addListener(function(port) {
             var bodyContent = '<a href="'+req.url+'">'+req.url+'</a>';
             if(!(req.url.indexOf('.pdf') != -1)){
                 for(let text of document.getElementsByTagName("body")){
-                    bodyContent+=text.innerHTML;
+                    bodyContent+=text.innerText;
                 }
             }
             var message = {"message":"pp_content", "contents":bodyContent};
             port.postMessage(message);
             console.log("Message sent: "+'{"message":"pp_content", "contents":'+bodyContent+'}');
+            port.postMessage({
+                "method": 'POST',
+                "action": 'xhttp',
+                "url": 'http://localhost:5000',
+                "data": message.contents
+            }, function(responseText) {
+                port.postMessage(message);
+                console.log("Message sent: "+'{"message":"pp_content", "contents":'+bodyContent+'}');
+            });
         }
     })
 });

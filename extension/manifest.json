@@ -1,6 +1,6 @@
 {
     "name": "Snoop Scoop",
-    "version": "0.1",
+    "version": "0.2",
     "description": "Finds the privacy policy in the website you're on and pops up a window showing the policy.",
     "content_scripts": [
         {
@@ -20,6 +20,10 @@
     "options_ui": {
         "page": "options.html",
         "chrome_style": true
+    },
+    "background": {
+        "scripts": ["eventPage.js"],
+        "persistent": false
     },
     // for backwards compatibility with older chrome versions
     "options_page": "options.html"
