@@ -19,12 +19,12 @@ wsgi_app = app.wsgi_app
 @app.route('/')
 def hello():
     """Render a placeholder page."""
-    return "Hello World!"
+    return "This is an api. It is not meant for viewing."
 
 @app.route('/api/analyze', methods=['POST'])
 def analysis_controller():
     """Flow control for text analysis."""
-    send_analyzed_text(analyze_text(recieve_policy(request)))
+    return jsonify(send_analyzed_text(analyze_text(recieve_policy(request))))
 
 
 def recieve_policy(request):
@@ -66,7 +66,7 @@ def send_analyzed_text(text):
     """Converts analyzed text into json and sends it to the machine learning models."""
     # TODO: import and connect machine learning module. Call relevent method here with text.
     # text is a list of words, reduced to normalized tokens.
-    #return jsonify(text)
+    # should return a dictionary with ratings for each of the three criteria. 
     
 
 if __name__ == '__main__':
