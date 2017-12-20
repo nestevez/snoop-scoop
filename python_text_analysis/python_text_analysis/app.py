@@ -9,6 +9,7 @@ import json
 import os
 import re
 import textcnn
+import eval
 import tensorflow as tf
 
 app = Flask(__name__, instance_relative_config=True)
@@ -69,7 +70,8 @@ def send_analyzed_text(text):
     # TODO: import and connect machine learning module. Call relevent method here with text.
     # text is a list of words, reduced to normalized tokens.
     # should return a dictionary with ratings for each of the three criteria.
-    feed_dict = {x: " ".join(text)} #this will be part of the expected input for each ML algorithim.
+    feed_dict = " ".join(text) #this will be part of the expected input for each ML algorithim.
+    return eval_notice(feed_dict)
     
 
 if __name__ == '__main__':

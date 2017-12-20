@@ -33,10 +33,10 @@ function searchPP() {
                         if(req.message == 'pp_content'){
                             console.log("returning contents: "+ req.contents);
                             frame.innerHTML = req.contents;
-                            //Send request to app for analysis
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "http://localhost:5555", true);
-                            xhr.send(req.content);
+                            // //Send request to app for analysis
+                            // var xhr = new XMLHttpRequest();
+                            // xhr.open("POST", "http://localhost:5555", true);
+                            // xhr.send(req.contents);
                         }
                     });
                     //After grabbing + redisplaying text, the PP link tab is closed

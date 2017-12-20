@@ -34,14 +34,15 @@ chrome.runtime.onConnect.addListener(function(port) {
                 }
             }
             var message = {"message":"pp_content", "contents":bodyContent};
-            port.postMessage(message);
-            console.log("Message sent: "+'{"message":"pp_content", "contents":'+bodyContent+'}');
+            // port.postMessage(message);
+            // console.log("Message sent: "+'{"message":"pp_content", "contents":'+bodyContent+'}');
             port.postMessage({
                 "method": 'POST',
                 "action": 'xhttp',
                 "url": 'http://localhost:5000',
                 "data": message.contents
             }, function(responseText) {
+                message.contents = responseText;
                 port.postMessage(message);
                 console.log("Message sent: "+'{"message":"pp_content", "contents":'+bodyContent+'}');
             });
