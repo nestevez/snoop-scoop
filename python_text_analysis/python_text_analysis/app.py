@@ -8,6 +8,8 @@ import requests
 import json
 import os
 import re
+import textcnn
+import tensorflow as tf
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_pyfile('config.py')
@@ -66,7 +68,8 @@ def send_analyzed_text(text):
     """Converts analyzed text into json and sends it to the machine learning models."""
     # TODO: import and connect machine learning module. Call relevent method here with text.
     # text is a list of words, reduced to normalized tokens.
-    # should return a dictionary with ratings for each of the three criteria. 
+    # should return a dictionary with ratings for each of the three criteria.
+    feed_dict = {x: " ".join(text)} #this will be part of the expected input for each ML algorithim.
     
 
 if __name__ == '__main__':
