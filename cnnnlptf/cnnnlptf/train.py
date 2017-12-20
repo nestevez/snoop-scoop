@@ -13,7 +13,7 @@ from tensorflow.contrib import learn
 # Data loading params
 tf.flags.DEFINE_float("dev_sample_percentage", .1, "Percentage of the training data to use for validation")
 tf.flags.DEFINE_string("positive_data_file", "./data/rt-polaritydata/rt-polarity.pos", "Data source for the positive data.")
-tf.flags.DEFINE_string("neutral_data_file", "./data/rt-polaritydata/rt-polarity.neu", "Data source for the neutral data.")
+# tf.flags.DEFINE_string("neutral_data_file", "./data/rt-polaritydata/rt-polarity.neu", "Data source for the neutral data.")
 tf.flags.DEFINE_string("negative_data_file", "./data/rt-polaritydata/rt-polarity.neg", "Data source for the negative data.")
 
 # Model Hyperparameters
@@ -46,7 +46,7 @@ print("")
 
 # Load data
 print("Loading data...")
-x_text, y = data_helpers.load_data_and_labels(FLAGS.positive_data_file, FLAGS.neutral_data_file, FLAGS.negative_data_file)
+x_text, y = data_helpers.load_data_and_labels(FLAGS.positive_data_file, FLAGS.negative_data_file) #FLAGS.neutral_data_file, 
 
 # Build vocabulary
 max_document_length = max([len(x.split(" ")) for x in x_text])
@@ -87,7 +87,8 @@ with tf.Graph().as_default():
             embedding_size=FLAGS.embedding_dim,
             filter_sizes=list(map(int, FLAGS.filter_sizes.split(","))),
             num_filters=FLAGS.num_filters,
-            l2_reg_lambda=FLAGS.l2_reg_lambda)
+            #l2_reg_lambda=FLAGS.l2_reg_lambda
+            )
 
         # Define Training procedure
         global_step = tf.Variable(0, name="global_step", trainable=False)
