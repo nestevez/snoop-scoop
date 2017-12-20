@@ -10,7 +10,7 @@
     ],
     "permissions": [
         "tabs",
-        "http://localhost:5000/"
+        "http://localhost:*/"
     ],
     "browser_action": {
         "default_title": "Scoop that snoop!",

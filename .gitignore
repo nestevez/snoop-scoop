@@ -261,6 +261,10 @@ __pycache__/
 *.pyc
 
 appsettings.*
+<<<<<<< HEAD
+instance/
+env/
+=======
 
 *.npy
 runs/
@@ -331,3 +335,4 @@ target/
 ### IPythonNotebook ###
 # Temporary data
 .ipynb_checkpoints/
+>>>>>>> cnn-ml
