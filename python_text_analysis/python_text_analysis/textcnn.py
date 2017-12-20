@@ -50,7 +50,7 @@ class TextCNN(object):
 
         # Combine all the pooled features
         num_filters_total = num_filters*len(filter_sizes)
-        self.h_pool = tf.concat(3, pooled_outputs)
+        self.h_pool = tf.concat(pooled_outputs, 3)
         self.h_pool_flat = tf.reshape(self.h_pool, [-1, num_filters_total])
 
         #Add dropout
@@ -62,14 +62,14 @@ class TextCNN(object):
             W = tf.Variable(tf.truncated_normal([num_filters_total, num_classes], stddev=0.1), name="W")
             b = tf.Variable(tf.constant(0.1,shape=[num_classes]), name="b")
             self.scores = tf.nn.xw_plus_b(self.h_drop, W, b, name="scores")
-            self.predictions = tf.arg_max(self.scores,1,name="predictions")
+            self.predictions = tf.argmax(self.scores,1,name="predictions")
 
         #Calculate mean cross-entropy loss
         with tf.name_scope("loss"):
-            losses = tf.nn.softmax_cross_entropy_with_logits(self.scores, self.input_y)
+            losses = tf.nn.softmax_cross_entropy_with_logits(labels=self.input_y, logits=self.scores)
             self.loss = tf.reduce_mean(losses)
 
         #Calculate accuracy
         with tf.name_scope("accuracy"):
-            correct_predictions = tf.equal(self.predictions, tf.arg_max(self.input_y,1))
+            correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y,1))
             self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
