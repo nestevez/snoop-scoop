@@ -35,7 +35,7 @@ function searchPP() {
                             frame.innerHTML = req.contents;
                             //Send request to app for analysis
                             var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "http://localhost:5000", true);
+                            xhr.open("POST", "http://localhost:*", true);
                             xhr.send(req.content);
                         }
                     });
@@ -46,5 +46,4 @@ function searchPP() {
         });
     });        
 }
-
 window.onload = searchPP;
