@@ -333,4 +333,5 @@ target/
 ### IPythonNotebook ###
 # Temporary data
 .ipynb_checkpoints/
->>>>>>> cnn-ml
+
+*snoop/
