@@ -27,7 +27,7 @@ chrome.runtime.onConnect.addListener(function(port) {
         }
         //When a grab pp text message is received, if the PP link is not a PDF, it collects all the text in the page and returns it tp the pop-up script
         if(req.message == "grab_pp_text"){
-            var bodyContent = '<a href="'+req.url+'">'+req.url+'</a>';
+            var bodyContent = '';
             if(!(req.url.indexOf('.pdf') != -1)){
                 for(let text of document.getElementsByTagName("body")){
                     bodyContent+=text.innerText;

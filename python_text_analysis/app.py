@@ -34,7 +34,6 @@ def analysis_controller():
 
 def recieve_policy(request):
     print("Policy received")
-    pdb.set_trace()
     """Load json data from the extension's request."""
     text = request.data.decode("utf-8")
     return text
@@ -60,12 +59,15 @@ def analyze_text(data):
         }
     headers = {'Content-Type': 'application/json', 'Ocp-Apim-Subscription-Key': app.config['AZURE_API_KEY']}
     response = requests.post(uri, json = payload, headers = headers)
-    analyzed_text = json.loads(response.text)[0]['result']
-    all_words = []
-    for sentence in analyzed_text:
-        for word in sentence['Tokens']:
-            all_words.append(word['NormalizedToken'])
-    show_words = all_words
+    try:
+        analyzed_text = json.loads(response.text)[0]['result']
+        all_words = []
+        for sentence in analyzed_text:
+            for word in sentence['Tokens']:
+                all_words.append(word['NormalizedToken'])
+        show_words = all_words
+    except:
+        all_words = [data]
     return all_words
     
 
