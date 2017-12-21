@@ -13,7 +13,7 @@ function searchPP() {
             console.log("Message received: "+req.message);
             //If a display link message is returned, pop-up shows the PP link, opens the PP link in a new tab
             if(req.message == "display_link"){
-                var frame = document.getElementById("privacypolicy");
+                var frame = document.getElementById("policylink");
                 frame.innerHTML = "<a href='"+req.url+"'>"+req.url+"</a>";
                 console.log(frame);
                 var newTabId = {"id":0};
@@ -39,8 +39,9 @@ function searchPP() {
                             xhr.onreadystatechange = function() {
                                 if (xhr.readyState == 4){
                                     var resp = JSON.parse(xhr.responseText);
-                                    frame.innerHTML = resp.contents;
-                                    console.log("returning contents: "+ resp.contents);
+                                    frame = document.getElementById("privacypolicy");
+                                    frame.innerHTML = resp;
+                                    console.log("returning contents: "+ resp);
                                 }
                                 else {
                                     console.log("State changed but not ready yet....");

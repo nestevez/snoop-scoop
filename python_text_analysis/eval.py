@@ -47,7 +47,7 @@ def eval_notice(pptext):
         y_test = np.argmax(y_test, axis=1)
 
     # Map data into vocabulary
-    vocab_path = os.path.join(".\\runs\\1513804124\\vocab")# "..",  
+    vocab_path = os.path.join(".\\runs\\1513821839\\vocab")# "..",  
     vocab_processor = learn.preprocessing.VocabularyProcessor.restore(vocab_path)
     x_test = np.array(list(vocab_processor.transform(x_raw)))
 
@@ -57,7 +57,7 @@ def eval_notice(pptext):
     # ==================================================
     # checkpoint_file = tf.train.latest_checkpoint(FLAGS.checkpoint_dir)
     # print(FLAGS.checkpoint_dir, "file: ", checkpoint_file)
-    checkpoint_file = "./runs/1513804124/checkpoints/model-200"
+    checkpoint_file = "./runs/1513821839/checkpoints/model-200"
     graph = tf.Graph()
     with graph.as_default():
         session_conf = tf.ConfigProto(
@@ -100,6 +100,6 @@ def eval_notice(pptext):
     print("Saving evaluation to {0}".format(out_path))
     with open(out_path, 'w') as f:
         csv.writer(f).writerows(predictions_human_readable)
-    pass_back = {"clause":"notice", "prediction":all_predictions}
-    print(pass_back.prediction)
+    pass_back = {"clause":"notice", "prediction":all_predictions.tolist()}
+    print(pass_back["prediction"])
     return pass_back
