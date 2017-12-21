@@ -13,7 +13,6 @@ def eval_notice(pptext):
 
     # Parameters
     # ==================================================
-
     # Data Parameters
     tf.flags.DEFINE_string("positive_data_file", "./data/rt-polaritydata/rt-polarity.pos", "Data source for the positive data.")
     #tf.flags.DEFINE_string("neutral_data_file", "./data/rt-polaritydata/rt-polarity.neu", "Data source for the neutral data.")
@@ -95,11 +94,11 @@ def eval_notice(pptext):
         print("Accuracy: {:g}".format(correct_predictions/float(len(y_test))))
     print(all_predictions)
     # Save the evaluation to a csv
-    predictions_human_readable = np.column_stack((np.array(x_raw), all_predictions))
-    out_path = os.path.join(FLAGS.checkpoint_dir, "..", "prediction.csv")
-    print("Saving evaluation to {0}".format(out_path))
-    with open(out_path, 'w') as f:
-        csv.writer(f).writerows(predictions_human_readable)
+    # predictions_human_readable = np.column_stack((np.array(x_raw), all_predictions))
+    # out_path = os.path.join(FLAGS.checkpoint_dir, "..", "prediction.csv")
+    # print("Saving evaluation to {0}".format(out_path))
+    # with open(out_path, 'w') as f:
+    #     csv.writer(f).writerows(predictions_human_readable)
     pass_back = {"clause":"notice", "prediction":all_predictions.tolist()}
     print(pass_back["prediction"])
     return pass_back
