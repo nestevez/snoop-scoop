@@ -31,8 +31,21 @@ function searchPP() {
                     port.onMessage.addListener(function(req){
                         console.log("Message received: "+req.message);
                         if(req.message == 'pp_content'){
-                            console.log("returning contents: "+ req.contents);
-                            frame.innerHTML = req.contents;
+                            //Send request to app for analysis
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", "http://localhost:5555/api/analyze", true);
+                            xhr.send(req.contents);
+                            console.log("Message sent to server at 5555; contents: "+req.contents)
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState == 4){
+                                    var resp = JSON.parse(xhr.responseText);
+                                    frame.innerHTML = resp.contents;
+                                    console.log("returning contents: "+ resp.contents);
+                                }
+                                else {
+                                    console.log("State changed but not ready yet....");
+                                }
+                            }
                         }
                     });
                     //After grabbing + redisplaying text, the PP link tab is closed

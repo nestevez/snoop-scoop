@@ -11,6 +11,7 @@ import re
 import textcnn
 import eval
 import tensorflow as tf
+import pdb
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_pyfile('config.py')
@@ -33,9 +34,9 @@ def analysis_controller():
 
 def recieve_policy(request):
     print("Policy received")
+    pdb.set_trace()
     """Load json data from the extension's request."""
-    data = request.get_json()
-    text = data["text"]
+    text = request.data.decode("utf-8")
     return text
 
 #@app.route('/api/analyze', methods=['GET'])
@@ -65,7 +66,7 @@ def analyze_text(data):
         for word in sentence['Tokens']:
             all_words.append(word['NormalizedToken'])
     show_words = all_words
-    return analyzed_text
+    return all_words
     
 
 def send_analyzed_text(text):
