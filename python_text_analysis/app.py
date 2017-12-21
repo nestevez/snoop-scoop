@@ -26,11 +26,13 @@ def hello():
 
 @app.route('/api/analyze', methods=['POST'])
 def analysis_controller():
+    print("POST request received")
     """Flow control for text analysis."""
     return jsonify(send_analyzed_text(analyze_text(recieve_policy(request))))
 
 
 def recieve_policy(request):
+    print("Policy received")
     """Load json data from the extension's request."""
     data = request.get_json()
     text = data["text"]
@@ -44,6 +46,7 @@ def recieve_policy(request):
 #    return response
 
 def analyze_text(data):
+    print("Analyzing Text")
     """
     Analyze incoming text with azure linguistic analysis.
     Data should be a string.
@@ -66,12 +69,13 @@ def analyze_text(data):
     
 
 def send_analyzed_text(text):
+    print("Sending Analyzed Text to ML")
     """Converts analyzed text into json and sends it to the machine learning models."""
     # TODO: import and connect machine learning module. Call relevent method here with text.
     # text is a list of words, reduced to normalized tokens.
     # should return a dictionary with ratings for each of the three criteria.
     feed_dict = " ".join(text) #this will be part of the expected input for each ML algorithim.
-    return eval_notice(feed_dict)
+    return eval.eval_notice(feed_dict)
     
 
 if __name__ == '__main__':

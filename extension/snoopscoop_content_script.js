@@ -36,16 +36,29 @@ chrome.runtime.onConnect.addListener(function(port) {
             var message = {"message":"pp_content", "contents":bodyContent};
             // port.postMessage(message);
             // console.log("Message sent: "+'{"message":"pp_content", "contents":'+bodyContent+'}');
-            port.postMessage({
-                "method": 'POST',
-                "action": 'xhttp',
-                "url": 'http://localhost:5000',
-                "data": message.contents
-            }, function(responseText) {
-                message.contents = responseText;
-                port.postMessage(message);
-                console.log("Message sent: "+'{"message":"pp_content", "contents":'+bodyContent+'}');
-            });
+            //Send request to app for analysis
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:5555", true);
+            xhr.send(message.contents);
+            console.log("Message sent: " + message.message + "contents: "+message.contents)
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4){
+                    var resp = JSON.parse(xhr.responseText);
+                    message.contents = resp;
+                    port.postMessage(message);
+                    console.log("Message sent: "+'{"message":"pp_content", "contents":'+bodyContent+'}');
+                }
+                else {
+                    console.log("State changed but not ready yet....");
+                }
+            }
+
+            // port.postMessage({
+            //     "method": 'POST',
+            //     "action": 'xhttp',
+            //     "url": 'localhost:5555/api/analyze',
+            //     "text": message.contents,
+            // }, function(responseText) {
         }
     })
 });
