@@ -10,7 +10,7 @@ itsdangerous==0.24
 Jinja2==2.10
 Markdown==2.6.10
 MarkupSafe==1.0
-numpy==1.13.3
+numpy==1.22.0
 protobuf==3.5.0.post1
 requests==2.18.4
 six==1.11.0
