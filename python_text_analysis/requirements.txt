@@ -11,7 +11,7 @@ Jinja2==2.10
 Markdown==2.6.10
 MarkupSafe==1.0
 numpy==1.13.3
-protobuf==3.5.0.post1
+protobuf==3.18.3
 requests==2.18.4
 six==1.11.0
 tensorflow==1.4.0
